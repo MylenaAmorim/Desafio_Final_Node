@@ -18,7 +18,10 @@ class CarroRepository {
     return carSchema.find();
   }
 
-  
+  async update(id, payload) {
+    await carSchema.updateOne({ _id: id }, payload);
+    return carSchema.findOne({ _id: id });
+  }
 }
 
 

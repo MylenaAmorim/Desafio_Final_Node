@@ -29,6 +29,13 @@ class CarroService {
     return result;
   }
 
+  async update(id, payload) {
+
+    const result = await CarroRepository.update(id, payload);
+
+    return result;
+  }
+
 
 }
 
