@@ -40,6 +40,24 @@ class CarroController {
     }
   }
 
+  async update(req, res) {
+    const id = req.params.id;
+    
+    try {
+      const updatedCarro = await CarroService.update(id, req.body);
+
+      res.status(200).json(updatedCarro);
+    } catch (error) {
+
+      return res.status(400).json({
+        'message': 'bad request',
+        'details': [{ 'message': error.message, }]
+      })
+
+    }
+
+  }
+
   async delete(req, res) {
     try {
       const id = req.params.id;
