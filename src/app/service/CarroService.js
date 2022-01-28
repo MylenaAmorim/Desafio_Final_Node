@@ -16,6 +16,19 @@ class CarroService {
     return result;
   }
 
+  async findOne(payload) {
+
+    const result = await CarroRepository.findOne(payload);
+
+    return result;
+  }
+
+  async delete(payload) {
+    const result = await CarroRepository.delete(payload);
+
+    return result;
+  }
+
 
 }
 
