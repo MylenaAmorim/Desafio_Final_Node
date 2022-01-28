@@ -25,6 +25,21 @@ class CarroController {
     }
   }
 
+  async getOne(req, res) {
+    try {
+      const id = req.params.id;
+      const carro = await CarroService.findOne({ _id: id });
+
+      if (!carro) {
+        return res.status(404).json({ message: 'Car not found' });
+      }
+
+      return res.status(200).json(carro);
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
   async delete(req, res) {
     try {
       const id = req.params.id;
