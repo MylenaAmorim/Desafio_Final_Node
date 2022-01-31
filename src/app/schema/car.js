@@ -1,24 +1,29 @@
 const mongoose = require('mongoose');
+const util = require('../util');
 
 const carSchema = mongoose.Schema({
     modelo: {
         type: String,
-        require: true
+        required: true
     },
     cor: {
         type: String,
-        require: true
+        required: true
     },
     ano: {
         type: Number,
-        require: true
+        min: 1950, 
+        max: 2022,
+        required: true
     },
     acessorios: [{
-        descricao: {
-            type: String,
-            unique: true
-        }
+        _id: false,
+        descricao: { type: String }
     }],
+    quantidadePassageiros: {
+        type: String,
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now(),
@@ -31,5 +36,8 @@ const carSchema = mongoose.Schema({
     }
 });
 
-const cars = mongoose.model('Cars', carSchema)
+util.ocultarInformacoes(carSchema);
+
+const cars = mongoose.model('Cars', carSchema);
+
 module.exports = cars;
