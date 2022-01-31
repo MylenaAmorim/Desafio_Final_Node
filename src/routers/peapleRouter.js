@@ -1,4 +1,4 @@
-const PeapleController = require('../app/controllers/PeapleController');
+const PeapleController = require('../app/controllers/peapleController');
 
 module.exports = (server, routes, prefix = '/api/v1/peaple') => {
   routes.post('/', PeapleController.create);

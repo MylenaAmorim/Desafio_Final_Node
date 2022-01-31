@@ -1,4 +1,4 @@
-const PeapleRepository = require('../repository/PeapleRepository');
+const PeapleRepository = require('../repository/peapleRepository');
 
 class PeapleService {
 
