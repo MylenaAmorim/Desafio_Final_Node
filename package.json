@@ -2,13 +2,26 @@
   "name": "projeto-final",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "dependencies": {
-    "express": "^4.17.2"
+    "@joi/date": "^2.1.0",
+    "cors": "^2.8.5",
+    "dotenv-safe": "^8.2.0",
+    "env": "0.0.2",
+    "express": "^4.17.2",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "middlewares": "^0.1.1",
+    "mongodb": "^4.3.1",
+    "mongoose": "^6.1.8"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
