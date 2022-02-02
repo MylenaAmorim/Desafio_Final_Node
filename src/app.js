@@ -1,7 +1,9 @@
+require('./infra/database/mongo/index');
+require('dotenv-safe').config();
+
 const express = require('express');
 const router = require('./routers');
 const cors = require('cors');
-require('./infra/database/mongo/index');
 
 class App {
   constructor () {
@@ -12,7 +14,8 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
-    this.server.use(cors())
+    this.server.use(cors());
+    // this.server.use(env);
   }
 
   routes() {

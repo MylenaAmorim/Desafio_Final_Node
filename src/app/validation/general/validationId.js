@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const UtilError = require('../../utilError');
+const UtilError = require('../../util/utilError');
 
 module.exports = async (req, res, next) => {
     try {      
@@ -11,11 +11,11 @@ module.exports = async (req, res, next) => {
         const { error } = await schema.validate(req.params, { abortEarly: false });
 
         if (error) {
-            throw UtilError.badRequest400(res, error.details);
+            throw UtilError.badRequest(res, error.details);
         }
 
         return next();
     } catch (error) {
-        return UtilError.badRequest400(res, error.message);
+        return UtilError.badRequest(res, error.message);
     }
 }

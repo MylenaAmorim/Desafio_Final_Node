@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const util = require('../util');
+const Util = require('../util/util');
 
 const carSchema = mongoose.Schema({
     modelo: {
@@ -36,7 +36,7 @@ const carSchema = mongoose.Schema({
     }
 });
 
-util.ocultarInformacoes(carSchema);
+Util.hideInfos(carSchema);
 
 const cars = mongoose.model('Cars', carSchema);
 
