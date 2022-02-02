@@ -11,7 +11,7 @@ class CarroRepository {
   }
 
   async findOne(payload) {
-    return carSchema.find(payload);
+    return carSchema.findOne(payload);
   }
 
   async findAll(payload) {
@@ -23,7 +23,7 @@ class CarroRepository {
       .skip((page - 1) * limit)
       .exec();
 
-    const count = await carSchema.countDocuments();
+    const count = await carSchema.countDocuments(payload);
 
     return { veiculos, total: count, limit: limit, offiset: page, offisets: Math.ceil(count / limit) };
   }

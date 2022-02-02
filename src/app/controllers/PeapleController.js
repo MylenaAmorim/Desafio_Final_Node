@@ -1,80 +1,100 @@
 const PeapleService = require('../service/peapleService');
+const UtilError = require('../util/utilError');
+const Ut = require('../util/util');
+
+const jwt = require('jsonwebtoken');
+const SECRET = process.env.SECRET;
 
 class PeapleController {
 
   async create(req, res) {
     try {
       const dados = await PeapleService.create(req.body);
-
       return res.status(201).json(dados);
     } catch (error) {
-      return res.status(400).json({
-        'message': 'Bad Request',
-        'details': [{ 'message': error.message }]
-      });
+      return UtilError.badRequest(res, error.message);
     }
   }
 
   async getAll(req, res) {
     try {
-      const result = await PeapleService.findAll(req.body);
+      const result = await PeapleService.findAll(req.query);
 
-      return res.status(200).json({ 'peaples': result });
+      if (!result.pessoas.length) {
+        return UtilError.notFound(res, `No peaple found`);
+      }
+
+      return res.status(200).json(result);
     } catch (error) {
-      return res.status(500).json(error.message)
+      return UtilError.internalServer(res, error.message);
+    }
+  }
+
+  async autenticacao(req, res) {
+    try {
+      const { email, senha } = req.body;
+
+      const user = await PeapleService.findOne({ email: email });
+
+      if (!user) {
+        return UtilError.notFound(res, `No user found`);
+      }
+
+      if (senha != user.senha) {
+        return UtilError.notFound(res, `Invalid password`);
+      }
+
+      const token = jwt.sign({ _id: user._id }, SECRET, {
+        expiresIn: 86400
+      });
+
+      res.json({ user, token});
+    } catch (error) {
+      return UtilError.internalServer(res, error);
     }
   }
 
   async getOne(req, res) {
     try {
       const id = req.params.id;
-      const carro = await PeapleService.findOne({ _id: id });
+      const peaple = await PeapleService.findOne({ _id: id });
 
-      if (!carro) {
-        return res.status(404).json({ message: 'Peaple not found' });
+      if (!peaple) {
+        return UtilError.notFound(res, `No peaple found`);
       }
 
-      return res.status(200).json(carro);
+      return res.status(200).json(peaple);
     } catch (error) {
-      return res.status(500).json(error.message)
+      return UtilError.internalServer(res, error);
     }
   }
 
   async update(req, res) {
     const id = req.params.id;
-    
+
     try {
-      const updatedCarro = await PeapleService.update(id, req.body);
+      const updatedPeaple = await PeapleService.update(id, req.body);
 
-      res.status(200).json(updatedCarro);
+      res.status(200).json(updatedPeaple);
     } catch (error) {
-
-      return res.status(400).json({
-        'message': 'bad request',
-        'details': [{ 'message': error.message, }]
-      })
-
+      return UtilError.badRequest(res, error);
     }
-
   }
 
   async delete(req, res) {
     try {
       const id = req.params.id;
-      const carro = await PeapleService.findOne({ _id: id });
+      const peaple = await PeapleService.findOne({ _id: id });
 
-      if (!carro) {
-        return res.status(404).json({ message: 'Peaple not found' });
+      if (!peaple) {
+        return UtilError.notFound(res, `No peaple found`);
       }
 
       await PeapleService.delete({ _id: id });
 
       return res.status(204).json();
     } catch (error) {
-      return res.status(400).json({
-        'message': 'Bad request',
-        'details': [{ 'message': error }]
-      });
+      return UtilError.badRequest(res, error.message);
     }
   }
 }

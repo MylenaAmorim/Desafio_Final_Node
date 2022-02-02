@@ -15,7 +15,6 @@ class CarService {
   }
 
   async findOne(payload) {
-
     const result = await CarRepository.findOne(payload);
 
     return result;
@@ -28,7 +27,6 @@ class CarService {
   }
 
   async update(id, payload) {
-
     const result = await CarRepository.update(id, payload);
 
     return result;

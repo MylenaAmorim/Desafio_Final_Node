@@ -11,11 +11,21 @@ class PeapleRepository {
   }
 
   async findOne(payload) {
-    return peapleSchema.find(payload);
+    return peapleSchema.findOne(payload);
   }
 
   async findAll(payload) {
-    return peapleSchema.find();
+    const page = 1;
+    const limit = 4;
+
+    const pessoas = await peapleSchema.find(payload)
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await peapleSchema.countDocuments(payload);
+
+    return { pessoas, total: count, limit: limit, offiset: page, offisets: Math.ceil(count / limit) };
   }
 
   async update(id, payload) {

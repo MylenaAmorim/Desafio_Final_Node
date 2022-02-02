@@ -1,5 +1,5 @@
 const CarService = require('../service/carService');
-const UtilError = require('../utilError');
+const UtilError = require('../util/utilError');
 
 class CarController {
 
@@ -9,7 +9,7 @@ class CarController {
 
       return res.status(201).json(dados);
     } catch (error) {
-      return UtilError.badRequest400(res, error.message);
+      return UtilError.badRequest(res, error);
     }
   }
 
@@ -18,12 +18,12 @@ class CarController {
       const result = await CarService.findAll(req.query);
 
       if (!result.veiculos.length) {
-        return UtilError.notFound404(res, `No car found`);
+        return UtilError.notFound(res, `No car found`);
       }
 
       return res.status(200).json(result);
     } catch (error) {
-      return UtilError.badRequest400(res, error.message);
+      return UtilError.internalServer(res, error.message);
     }
   }
 
@@ -33,12 +33,12 @@ class CarController {
       const carro = await CarService.findOne({ _id: id });
 
       if (!carro.length) {
-        return UtilError.notFound404(res, `No car found of Id ${id}`);
+        return UtilError.notFound(res, `No car found of Id ${id}`);
       }
 
       return res.status(200).json(carro);
     } catch (error) {
-      return UtilError.badRequest400(res, error.message);
+      return UtilError.internalServer(res, error.message);
     }
   }
 
@@ -48,14 +48,14 @@ class CarController {
       const carro = await CarService.findOne({ _id: id });
 
       if (!carro.length) {
-        return UtilError.notFound404(res, `No car found of Id ${id}`);
+        return UtilError.notFound(res, `No car found of Id ${id}`);
       }
 
       const updatedCarro = await CarService.update(id, req.body);
 
       res.status(200).json(updatedCarro);
     } catch (error) {
-      return UtilError.badRequest400(res, error.message);
+      return UtilError.badRequest(res, error);
     }
 
   }
@@ -66,14 +66,14 @@ class CarController {
       const carro = await CarService.findOne({ _id: id });
 
       if (!carro.length) {
-        return UtilError.notFound404(res, `No car found of Id ${id}`);
+        return UtilError.notFound(res, `No car found of Id ${id}`);
       }
 
       await CarService.delete({ _id: id });
 
       return res.status(204).json();
     } catch (error) {
-      return UtilError.badRequest400(res, error.message);
+      return UtilError.badRequest(res, error.message);
     }
   }
 }

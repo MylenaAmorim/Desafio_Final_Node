@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Util = require('../util/util');
 
 const peapleSchema = mongoose.Schema({        
     nome: {
@@ -6,7 +7,8 @@ const peapleSchema = mongoose.Schema({
         require: true
     },
     cpf: {
-        type: Number,
+        type: String,
+        unique: true,
         require: true
     },
     data_nascimento: {
@@ -15,10 +17,17 @@ const peapleSchema = mongoose.Schema({
     },
     email: {
         type: String,
+        unique: true,
+        require: true
+    },
+    senha: {
+        type: String,
+        min: 6,
         require: true
     },
     habilitado: {
-        type: Boolean,
+        type: String,
+        enum: ['sim', 'não'],
         require: true
     },
     createdAt: {
@@ -32,6 +41,8 @@ const peapleSchema = mongoose.Schema({
         select: false
     }
 });
+
+Util.hideInfos(peapleSchema);
 
 const peaple = mongoose.model('Peaple', peapleSchema);
 
