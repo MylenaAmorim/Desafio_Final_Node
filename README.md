@@ -30,6 +30,24 @@ A aplicação é capaz de cadastrar novos, alterar, listar(com paginação) e de
 ### :oncoming_automobile: Rotas de Carros:
 
 POST http://localhost:3000/api/v1/car
+```
+{
+"modelo": "GM S10 2.8",
+"cor": "branco",
+"ano": "2021",
+"acessorios": [
+{ "descricao": "Ar-condicionado" },
+{ "descricao": "Dir. Hidráulica" },
+{ "descricao": "Cabine Dupla" },
+{ "descricao": "Tração 4x4" },
+{ "descricao": "4 portas" },
+{ "descricao": "Diesel" },
+{ "descricao": "Air bag" },
+{ "descricao": "ABS" }
+],
+"quantidadePassageiros": 5
+}
+```
 
 GET http://localhost:3000/api/v1/car
 
@@ -38,6 +56,24 @@ GET http://localhost:3000/api/v1/car/:id
 DELETE http://localhost:3000/api/v1/car/:id
 
 PUT http://localhost:3000/api/v1/car/:id
+```
+{
+"modelo": "GM S11 2.8",
+"cor": "preto",
+"ano": "2021",
+"acessorios": [
+{ "descricao": "Ar-condicionado" },
+{ "descricao": "Dir. Hidráulica" },
+{ "descricao": "Cabine Dupla" },
+{ "descricao": "Tração 4x4" },
+{ "descricao": "4 portas" },
+{ "descricao": "Diesel" },
+{ "descricao": "Air bag" },
+{ "descricao": "ABS" }
+],
+"quantidadePassageiros": 5
+}
+```
 
 ### :pouting_face: Rotas de Pessoas:
 
