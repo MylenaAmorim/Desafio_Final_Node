@@ -78,6 +78,15 @@ PUT http://localhost:3000/api/v1/car/:id
 ### :pouting_face: Rotas de Pessoas:
 
 POST http://localhost:3000/api/v1/peaple
+```{
+"nome": "Luciano Silva",
+"cpf": "131.147.860-49",
+"data_nascimento": "03/03/2021",
+"email": "joazinho@email.com",
+"senha": "123456",
+"habilitado": "sim"
+}
+```
 
 GET http://localhost:3000/api/v1/peaple
 
@@ -86,6 +95,15 @@ GET http://localhost:3000/api/v1/peaple/:id
 DELETE http://localhost:3000/api/v1/peaple/:id
 
 PUT http://localhost:3000/api/v1/peaple/:id
+```{
+"nome": "Luciano Silva de Pereira",
+"cpf": "131.147.860-49",
+"data_nascimento": "03/03/2021",
+"email": "joazinho@email.com",
+"senha": "123456",
+"habilitado": "sim"
+}
+```
 
 
 
