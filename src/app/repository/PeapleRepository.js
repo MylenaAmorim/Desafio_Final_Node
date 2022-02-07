@@ -15,17 +15,7 @@ class PeapleRepository {
   }
 
   async findAll(payload) {
-    const page = 1;
-    const limit = 4;
-
-    const pessoas = await peapleSchema.find(payload)
-      .limit(limit)
-      .skip((page - 1) * limit)
-      .exec();
-
-    const count = await peapleSchema.countDocuments(payload);
-
-    return { pessoas, total: count, limit: limit, offiset: page, offisets: Math.ceil(count / limit) };
+    return peapleSchema.find(payload)
   }
 
   async update(id, payload) {

@@ -17,11 +17,11 @@ class CarController {
     try {
       const result = await CarService.findAll(req.query);
 
-      if (!result.veiculos.length) {
+      if (!result) {
         return UtilError.notFound(res, `No car found`);
       }
 
-      return res.status(200).json(result);
+      return res.status(200).json({'veiculos': result});
     } catch (error) {
       return UtilError.internalServer(res, error.message);
     }
@@ -32,7 +32,7 @@ class CarController {
       const id = req.params.id;
       const carro = await CarService.findOne({ _id: id });
 
-      if (!carro.length) {
+      if (!carro) {
         return UtilError.notFound(res, `No car found of Id ${id}`);
       }
 
@@ -47,7 +47,7 @@ class CarController {
       const id = req.params.id;
       const carro = await CarService.findOne({ _id: id });
 
-      if (!carro.length) {
+      if (!carro) {
         return UtilError.notFound(res, `No car found of Id ${id}`);
       }
 
@@ -65,7 +65,7 @@ class CarController {
       const id = req.params.id;
       const carro = await CarService.findOne({ _id: id });
 
-      if (!carro.length) {
+      if (!carro) {
         return UtilError.notFound(res, `No car found of Id ${id}`);
       }
 
