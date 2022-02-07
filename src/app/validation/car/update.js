@@ -5,15 +5,14 @@ const UtilError = require('../../util/utilError');
 module.exports = async (req, res, next) => {
     try {      
         const schema = Joi.object({
-            id: Joi.string().pattern(new RegExp('^[0-9a-fA-F]{24}$')).message("Invalid id"),
-            modelo: Joi.string().min(1),
-            cor: Joi.string().min(1),
-            ano: Joi.number().min(1950).max(2022),
-            acessorios: Joi.array().min(1), //melhorar isso
-            quantidadePassageiros: Joi.number().min(1),
+            modelo: Joi.string().empty(" ").required(),
+            cor: Joi.string().empty(" ").required(),
+            ano: Joi.number().min(1950).max(2022).required(),
+            acessorios: Joi.array().items({'descricao': Joi.string().required()}).unique('descricao').empty(" ").required(),
+            quantidadePassageiros: Joi.number().required(),
         });
 
-        const { error } = await schema.validate(req.params, req.query, { abortEarly: false });
+        const { error } = await schema.validate(req.body, { abortEarly: false });
 
         if (error) {
             throw UtilError.badRequest(res, error.details);

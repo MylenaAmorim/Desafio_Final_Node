@@ -1,9 +1,5 @@
 const PeapleService = require('../service/peapleService');
 const UtilError = require('../util/utilError');
-const Ut = require('../util/util');
-
-const jwt = require('jsonwebtoken');
-const SECRET = process.env.SECRET;
 
 class PeapleController {
 
@@ -20,37 +16,13 @@ class PeapleController {
     try {
       const result = await PeapleService.findAll(req.query);
 
-      if (!result.pessoas.length) {
+      if (!result) {
         return UtilError.notFound(res, `No peaple found`);
       }
 
-      return res.status(200).json(result);
+      return res.status(200).json({'pessoas': result});
     } catch (error) {
       return UtilError.internalServer(res, error.message);
-    }
-  }
-
-  async autenticacao(req, res) {
-    try {
-      const { email, senha } = req.body;
-
-      const user = await PeapleService.findOne({ email: email });
-
-      if (!user) {
-        return UtilError.notFound(res, `No user found`);
-      }
-
-      if (senha != user.senha) {
-        return UtilError.notFound(res, `Invalid password`);
-      }
-
-      const token = jwt.sign({ _id: user._id }, SECRET, {
-        expiresIn: 86400
-      });
-
-      res.json({ user, token});
-    } catch (error) {
-      return UtilError.internalServer(res, error);
     }
   }
 
@@ -70,14 +42,19 @@ class PeapleController {
   }
 
   async update(req, res) {
-    const id = req.params.id;
-
     try {
+      const id = req.params.id;
+      const peaple = await PeapleService.findOne({ _id: id });
+
+      if (!peaple) {
+        return UtilError.notFound(res, `No peaple found`);
+      }
+
       const updatedPeaple = await PeapleService.update(id, req.body);
 
       res.status(200).json(updatedPeaple);
     } catch (error) {
-      return UtilError.badRequest(res, error);
+      return UtilError.badRequest(res, error.message);
     }
   }
 

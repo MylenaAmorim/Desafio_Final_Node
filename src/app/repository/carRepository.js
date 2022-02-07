@@ -15,17 +15,7 @@ class CarroRepository {
   }
 
   async findAll(payload) {
-    const page = 1;
-    const limit = 4;
-
-    const veiculos = await carSchema.find(payload)
-      .limit(limit)
-      .skip((page - 1) * limit)
-      .exec();
-
-    const count = await carSchema.countDocuments(payload);
-
-    return { veiculos, total: count, limit: limit, offiset: page, offisets: Math.ceil(count / limit) };
+    return carSchema.find(payload);
   }
 
   async update(id, payload) {

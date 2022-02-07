@@ -1,20 +1,20 @@
 class UtilError {
 
-    badRequest(res, menssage) {
+    async badRequest(res, menssage) {
         return res.status(400).json({
             'message': 'Bad Request',
             'details': menssage
         });
     }
 
-    notFound(res, menssage) {
+    async notFound(res, menssage) {
         return res.status(404).json({
             'message': 'Not Found',
             'details': menssage
         });
     }
 
-    internalServer(res, menssage) {
+    async internalServer(res, menssage) {
         return res.status(500).json({
             'message': 'Not Found',
             'details': menssage

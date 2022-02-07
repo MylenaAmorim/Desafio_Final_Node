@@ -9,7 +9,7 @@ module.exports = (server, routes, prefix = '/api/v1/peaple') => {
   routes.post('/', createValidation, PeapleController.create);
   routes.get('/', getAllValidation, PeapleController.getAll);
   routes.get('/:id', validationId, PeapleController.getOne);
-  routes.put('/:id', updateValidation, PeapleController.update);
+  routes.put('/:id', validationId, updateValidation, PeapleController.update);
   routes.delete('/:id', validationId, PeapleController.delete);
   server.use(prefix, routes);
 }
