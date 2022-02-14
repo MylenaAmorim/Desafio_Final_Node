@@ -23,9 +23,9 @@ class AuthenticationController {
                 expiresIn: 86400
             });
 
-            res.json({ user, token });
+            return res.status(200).json({ user, token });
         } catch (error) {
-            return UtilError.internalServer(res, error);
+            return UtilError.internalServer(res, error.message);
         }
     }
 

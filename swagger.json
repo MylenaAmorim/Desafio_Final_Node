@@ -1,0 +1,8 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Delicias da Maria",
+        "description": "API Delicias da Maria, para gerenciamento de funcionários e produtos",
+        "version": "0.0.1"
+    }
+}

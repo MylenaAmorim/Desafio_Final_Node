@@ -16,11 +16,7 @@ module.exports = async (req, res, next) => {
             habilitado: Joi.string().valid('sim', 'não').min(3).max(3),
         });
 
-        if (req.query.cpf && !Util.isValidCPF(req.query.cpf)) {
-            throw UtilError.badRequest(res, "Invalid CPF");
-        }
-
-        const { error } = await schema.validate(req.query);
+        const { error } = await schema.validate(req.query, { abortEarly: false });
 
         if (error) {
             throw UtilError.badRequest(res, error.details);

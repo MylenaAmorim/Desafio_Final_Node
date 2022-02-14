@@ -9,7 +9,7 @@ class CarController {
 
       return res.status(201).json(dados);
     } catch (error) {
-      return UtilError.badRequest(res, error);
+      return res.status(400).send(error.message);
     }
   }
 
@@ -17,13 +17,13 @@ class CarController {
     try {
       const result = await CarService.findAll(req.query);
 
-      if (!result) {
+      if (result.length < 1) {
         return UtilError.notFound(res, `No car found`);
       }
 
       return res.status(200).json({'veiculos': result});
     } catch (error) {
-      return UtilError.internalServer(res, error.message);
+      return UtilError.internalServer(res, error);
     }
   }
 
@@ -38,7 +38,7 @@ class CarController {
 
       return res.status(200).json(carro);
     } catch (error) {
-      return UtilError.internalServer(res, error.message);
+      return UtilError.internalServer(res, error);
     }
   }
 
@@ -73,7 +73,7 @@ class CarController {
 
       return res.status(204).json();
     } catch (error) {
-      return UtilError.badRequest(res, error.message);
+      return UtilError.badRequest(res, error);
     }
   }
 }

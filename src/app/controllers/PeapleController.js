@@ -6,9 +6,10 @@ class PeapleController {
   async create(req, res) {
     try {
       const dados = await PeapleService.create(req.body);
+
       return res.status(201).json(dados);
     } catch (error) {
-      return UtilError.badRequest(res, error.message);
+      return res.status(400).send(error);
     }
   }
 
@@ -16,7 +17,7 @@ class PeapleController {
     try {
       const result = await PeapleService.findAll(req.query);
 
-      if (!result) {
+      if (result.length < 1) {
         return UtilError.notFound(res, `No peaple found`);
       }
 
@@ -37,7 +38,7 @@ class PeapleController {
 
       return res.status(200).json(peaple);
     } catch (error) {
-      return UtilError.internalServer(res, error);
+      return UtilError.internalServer(res, error.message);
     }
   }
 
@@ -54,7 +55,7 @@ class PeapleController {
 
       res.status(200).json(updatedPeaple);
     } catch (error) {
-      return UtilError.badRequest(res, error.message);
+      return res.status(400).send(error);
     }
   }
 
@@ -71,7 +72,7 @@ class PeapleController {
 
       return res.status(204).json();
     } catch (error) {
-      return UtilError.badRequest(res, error.message);
+      return UtilError.internalServer(res, error.message);
     }
   }
 }
