@@ -17,6 +17,6 @@ module.exports = async (req, res, next) => {
 
         return next();
     } catch (error) {
-        return UtilError.badRequest(res, error.message);
+        return UtilError.badRequest(res, error.details);
     }
 }

@@ -1,6 +1,7 @@
 require('./infra/database/mongo/index');
 require('dotenv-safe').config();
 
+const cookieParser = require('cookie-parser')
 const express = require('express');
 const router = require('./routers');
 const cors = require('cors');
@@ -15,6 +16,7 @@ class App {
   middlewares() {
     this.server.use(express.json());
     this.server.use(cors());
+    this.server.use(cookieParser()); 
   }
 
   routes() {
