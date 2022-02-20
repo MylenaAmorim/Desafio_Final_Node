@@ -1,9 +1,6 @@
 const RentalService = require('../service/rentalService');
 const UtilError = require('../util/utilError');
 const axios = require('axios');
-const { Promise } = require('mongoose');
-
-
 
 class RentalController {
 
@@ -13,6 +10,11 @@ class RentalController {
 
     for (const endereco of enderecosBody) {
       let response = await axios.get(`https://viacep.com.br/ws/${endereco.cep}/json`);
+
+      if (response.data.erro) {
+        throw UtilError.error("Bad Request", `CEP ${endereco.cep} not found`);
+      }
+
       let novoEndereco = { ...endereco, localidade: response.data.localidade, logradouro: response.data.logradouro, bairro: response.data.bairro, uf: response.data.uf };
       
       enderecoCompleto.push(novoEndereco);
@@ -25,7 +27,7 @@ class RentalController {
 
       return res.status(201).json(result);
     } catch (error) {
-      return res.status(400).send(error.message);
+      return res.status(400).send(error);
     }
   }
 
@@ -48,39 +50,39 @@ class RentalController {
       const id = req.params.id;
       const rental = await RentalService.findOne({ _id: id });
 
-      if (!peaple) {
+      if (!rental) {
         return UtilError.notFound(res, `No rental found`);
       }
 
-      return res.status(200).json(peaple);
+      return res.status(200).json(rental);
     } catch (error) {
       return UtilError.internalServer(res, error.message);
     }
   }
 
-  // async update(req, res) {
-  //   try {
-  //     const id = req.params.id;
-  //     const peaple = await RentalService.findOne({ _id: id });
+  async update(req, res) {
+    try {
+      const id = req.params.id;
+      const rental = await RentalService.findOne({ _id: id });
 
-  //     if (!peaple) {
-  //       return UtilError.notFound(res, `No peaple found`);
-  //     }
+      if (!rental) {
+        return UtilError.notFound(res, `No rental found`);
+      }
 
-  //     const updatedPeaple = await RentalService.update(id, req.body);
+      const updatedRental = await RentalService.update(id, req.body);
 
-  //     res.status(200).json(updatedPeaple);
-  //   } catch (error) {
-  //     return UtilError.badRequest(res, error);
-  //   }
-  // }
+      res.status(200).json(updatedRental);
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+  }
 
   async delete(req, res) {
     try {
       const id = req.params.id;
-      const peaple = await RentalService.findOne({ _id: id });
+      const rental = await RentalService.findOne({ _id: id });
 
-      if (!peaple) {
+      if (!rental) {
         return UtilError.notFound(res, `No rental found`);
       }
 

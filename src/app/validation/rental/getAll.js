@@ -9,11 +9,14 @@ module.exports = async (req, res, next) => {
     try {
         const schema = Joi.object({
             nome: Joi.string().empty(" "),
-            cpf: Joi.string().empty(" ").custom((value, helper) => { if (!Util.isValidCPF(value)) return helper.message("Invalid CPF")}),
-            data_nascimento: Joi.date().format('DD/MM/YYYY'),
-            email: Joi.string().empty(" ").email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'br'] } }),
-            senha: Joi.string().min(6),
-            habilitado: Joi.string().valid('sim', 'não').min(3).max(3),
+            cnpj: Joi.string().empty(" ").custom((value, helper) => { if (!Util.isValidCnpj(value)) return helper.message("Invalid CNPJ")}),
+            atividades: Joi.string().empty(" "),
+            endereco: Joi.array().items(Joi.object({
+                'cep': Joi.string(), 
+                'complemento': Joi.string(), 
+                'number': Joi.string(),
+                'isFilial': Joi.boolean(),
+            })).empty(),
         });
 
         const { error } = await schema.validate(req.query, { abortEarly: false });

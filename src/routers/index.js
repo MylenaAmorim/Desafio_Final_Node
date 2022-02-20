@@ -16,7 +16,7 @@ module.exports = server => {
     next();
   });
 
-  server.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   server.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*") 

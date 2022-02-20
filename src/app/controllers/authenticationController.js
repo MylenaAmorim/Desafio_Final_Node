@@ -20,9 +20,11 @@ class AuthenticationController {
             }
 
             const token = jwt.sign({ _id: user._id }, SECRET, {
-                expiresIn: 86400
+                expiresIn: 86400,
             });
 
+            res.cookie('authorization', token);
+            
             return res.status(200).json({ user, token });
         } catch (error) {
             return UtilError.internalServer(res, error.message);

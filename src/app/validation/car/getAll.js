@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
             modelo: Joi.string().empty(" "),
             cor: Joi.string().empty(" "),
             ano: Joi.number().min(1950).max(2022),
-            acessorios: Joi.array().items({'descricao': Joi.string().required()}).unique('descricao').empty(" "),
+            acessorios: Joi.array().items({'descricao': Joi.string()}).unique('descricao').empty(" "),
             quantidadePassageiros: Joi.number(),
         });
 
@@ -19,6 +19,6 @@ module.exports = async (req, res, next) => {
 
         return next();
     } catch (error) {
-        return UtilError.badRequest(res, error);
+        return UtilError.badRequest(res, error.details);
     }
 }

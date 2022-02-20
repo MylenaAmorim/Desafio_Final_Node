@@ -2,7 +2,7 @@ const CarService = require('../service/carService');
 const UtilError = require('../util/utilError');
 
 class CarController {
-
+  
   async create(req, res) {
     try {
       const dados = await CarService.create(req.body);
