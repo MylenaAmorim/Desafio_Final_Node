@@ -1,0 +1,760 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Compassolisa",
+    "description": "Projeto final do programa de bolsas da Compass. Compassolisa é um seguimento carros para alugar de luxo e semi luxos",
+    "version": "0.0.1"
+  },
+  "license": {
+    "name": "Lincença: GPLv3",
+    "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+  },
+  "externalDocs": {
+    "description": "Repositório-(Github)",
+    "url": "https://github.com/MylenaAmorim/Desafio_Final_Node"
+  },
+  "basePath": "/api/v1/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/authenticate": {
+      "post": {
+        "summary": "Fazer login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "senha": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "Erro ao fazer login",
+            "content": {
+              "application/json": {
+                "example": "No user found"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/car": {
+      "post": {
+        "summary": "Cadastrar um carro",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "modelo": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "cor": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "ano": {
+                    "type": "integer",
+                    "required": true
+                  },
+                  "acessorios": {
+                    "type": "array",
+                    "required": true,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "descricao": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "quantidadePassageiros": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso, carro cadastrado",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Erro ao cadastrar um carro",
+            "content": {
+              "application/json": {
+                "example": "Year invalid"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar todos os Carros",
+        "parameters": [
+          {
+            "name": "modelo",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "cor",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ano",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "quantidadePassageiros",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "acessorios",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "in": "query",
+              "type": "object",
+              "properties": {
+                "descricao": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/car/{id}": {
+      "get": {
+        "summary": "Buscar um carro",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso, carro encontrado"
+          },
+          "404": {
+            "description": "Erro ao pesquisar por um carro",
+            "content": {
+              "application/json": {
+                "example": "Car not found"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um carro",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "modelo": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "cor": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "ano": {
+                    "type": "integer",
+                    "required": true
+                  },
+                  "acessorios": {
+                    "required": true,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "descricao": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "quantidadePassageiros": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso, carro atualizado",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "Erro ao alterar um carro",
+            "content": {
+              "application/json": {
+                "example": "Car not found"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um carro",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso, carro deletado"
+          },
+          "404": {
+            "description": "Erro ao deletar um carro",
+            "content": {
+              "application/json": {
+                "example": "Car not found"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/peaple": {
+      "post": {
+        "summary": "Cadastrar uma pessoa",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "cpf": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "data_nascimento": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "senha": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "habilitado": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso, pessoa cadastrada",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Erro ao cadastrar uma pessoa",
+            "content": {
+              "application/json": {
+                "example": "CPF invalid"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar todas as pessoas",
+        "parameters": [
+          {
+            "name": "nome",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "cpf",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data_nascimento",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "habilitado",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/peaple/{id}": {
+      "get": {
+        "summary": "Buscar uma pessoa",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso, pessoa encontrada"
+          },
+          "404": {
+            "description": "Erro ao pesquisar por uma pessoa",
+            "content": {
+              "application/json": {
+                "example": "Peaple not found"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar o cadastro de uma pessoa",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "cpf": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "data_nascimento": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "senha": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "habilitado": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso, pessoa atualizada",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "Erro ao alterar uma pessoa",
+            "content": {
+              "application/json": {
+                "example": "Peaple not found"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta uma pessoa do sistema",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso, pessoa deletada"
+          },
+          "404": {
+            "description": "Erro ao deletar uma pessoa",
+            "content": {
+              "application/json": {
+                "example": "Peaple not found"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rental": {
+      "post": {
+        "summary": "Cadastrar uma locadora",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "cnpj": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "atividades": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "endereco": {
+                    "type": "array",
+                    "required": true,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "cep": {
+                          "type": "string",
+                          "required": true
+                        },
+                        "number": {
+                          "type": "string",
+                          "required": true
+                        },
+                        "isFilial": {
+                          "type": "string",
+                          "required": true
+                        },
+                        "complemento": {
+                          "type": "string",
+                          "required": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso, locadora cadastrada",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Erro ao cadastrar uma locadora",
+            "content": {
+              "application/json": {
+                "example": "CNPJ invalid"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar todas as locadoras",
+        "parameters": [
+          {
+            "name": "nome",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "cnpj",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "atividades",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endereco",
+            "in": "query",
+            "type": "array",
+            "required": false,
+            "items": {
+              "type": "object",
+              "properties": {
+                "cep": {
+                  "in": "query",
+                  "type": "string",
+                  "required": true
+                },
+                "number": {
+                  "in": "query",
+                  "type": "string",
+                  "required": true
+                },
+                "isFilial": {
+                  "in": "query",
+                  "type": "string",
+                  "required": true
+                },
+                "complemento": {
+                  "in": "query",
+                  "type": "string",
+                  "required": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rental/{id}": {
+      "get": {
+        "summary": "Buscar uma locadora",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso, locadora encontrada"
+          },
+          "404": {
+            "description": "Erro ao pesquisar por uma locadora",
+            "content": {
+              "application/json": {
+                "example": "Rental not found"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar o cadastro de uma locadora",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "cnpj": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "atividades": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "endereco": {
+                    "type": "array",
+                    "required": true,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "cep": {
+                          "type": "string",
+                          "required": true
+                        },
+                        "number": {
+                          "type": "string",
+                          "required": true
+                        },
+                        "isFilial": {
+                          "type": "string",
+                          "required": true
+                        },
+                        "complemento": {
+                          "type": "string",
+                          "required": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso, locadora atualizada",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "Erro ao alterar a locadora",
+            "content": {
+              "application/json": {
+                "example": "rental not found"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta uma locadora do sistema",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso, locadora deletada"
+          },
+          "404": {
+            "description": "Erro ao deletar a locadora",
+            "content": {
+              "application/json": {
+                "example": "Rental not found"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

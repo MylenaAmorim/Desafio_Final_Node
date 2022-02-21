@@ -9,7 +9,7 @@ class CarController {
 
       return res.status(201).json(dados);
     } catch (error) {
-      return UtilError.badRequest(res, error);
+      return res.status(400).send(error.message);
     }
   }
 
@@ -17,13 +17,13 @@ class CarController {
     try {
       const result = await CarService.findAll(req.query);
 
-      if (!result) {
+      if (result.length < 1) {
         return UtilError.notFound(res, `No car found`);
       }
 
-      return res.status(200).json({'veiculos': result});
+      return res.status(200).json({ 'veiculos': result });
     } catch (error) {
-      return UtilError.internalServer(res, error.message);
+      return UtilError.internalServer(res, error);
     }
   }
 
@@ -38,7 +38,7 @@ class CarController {
 
       return res.status(200).json(carro);
     } catch (error) {
-      return UtilError.internalServer(res, error.message);
+      return UtilError.internalServer(res, error);
     }
   }
 
@@ -55,9 +55,44 @@ class CarController {
 
       res.status(200).json(updatedCarro);
     } catch (error) {
-      return UtilError.badRequest(res, error);
+      return UtilError.internalServer(res, error);
     }
 
+  }
+
+  async updateAcessorio(req, res) {
+    try {
+      const idCar = req.params.idCar;
+      const idAcessorio = req.params.id;
+      let novaDescricao = req.body.descricao;
+      let updatedCarro;
+      let acessoriosArray = [];
+
+      let carro = await CarService.findOne({ _id: idCar });
+
+      if (!carro) {
+        return UtilError.notFound(res, `No car found of Id ${idCar}`);
+      }
+
+      for (const acessorio of carro.acessorios) {
+        if (acessorio.descricao != novaDescricao) {
+          if (acessorio._id == idAcessorio) {
+            acessorio.descricao = novaDescricao;
+          }
+
+          acessoriosArray.push(acessorio);
+        }
+      }
+
+      carro.acessorios = acessoriosArray;
+
+      updatedCarro = await CarService.update(idCar, carro);
+
+      res.status(200).json(updatedCarro);
+
+    } catch (error) {
+      return UtilError.internalServer(res, error.message);
+    }
   }
 
   async delete(req, res) {
@@ -73,7 +108,7 @@ class CarController {
 
       return res.status(204).json();
     } catch (error) {
-      return UtilError.badRequest(res, error.message);
+      return UtilError.internalServer(res, error);
     }
   }
 }

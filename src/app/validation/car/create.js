@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
             modelo: Joi.string().empty(" ").required(),
             cor: Joi.string().empty(" ").required(),
             ano: Joi.number().min(1950).max(2022).required(),
-            acessorios: Joi.array().items({'descricao': Joi.string().required()}).unique('descricao').empty(" ").required(),
+            acessorios: Joi.array().items({'descricao': Joi.string().required()}).unique('descricao').empty(" ").min(3),
             quantidadePassageiros: Joi.number().required(),
         });
 
@@ -20,6 +20,6 @@ module.exports = async (req, res, next) => {
 
         return next();
     } catch (error) {
-        return UtilError.badRequest(res, error);
+        return UtilError.badRequest(res, error.details);
     }
 }
