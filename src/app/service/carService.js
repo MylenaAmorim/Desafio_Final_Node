@@ -30,7 +30,18 @@ class CarService {
     const result = await CarRepository.update(id, payload);
 
     return result;
-  }
+  } 
+
+  async findOneAndUpdate(payload, update) {
+    const result = await CarRepository.findOneAndUpdate(payload, update);
+
+    return result;
+  } 
+  async where(payload) {
+    const result = await CarRepository.where(payload);
+
+    return result;
+  } 
 
 }
 
