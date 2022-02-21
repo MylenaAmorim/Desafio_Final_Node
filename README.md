@@ -4,7 +4,7 @@ Projeto final do programa de bolsas da Compass. Compassolisa é um seguimento ca
 ## :computer: Desenvolvimento
 
 API desenvolvido em Node.js, usando o web framework ExpressJS e o banco de dados não-relacional MongoDB utilizando o ODM mongoose. 
-A aplicação é capaz de cadastrar novos, alterar, listar(com paginação) e deletar carros e pessoas, e fazer autenticação de usuário usando jsonwebtoken.
+A aplicação é capaz de cadastrar novos, alterar, listar(com paginação) e deletar carros, locadoras e pessoas, e fazer autenticação de usuário usando jsonwebtoken.
 
 ### Instruções necessárias para rodar a aplicação
 - Baixar e instalar o Node.js (https://nodejs.org/en/download/current/);
@@ -27,7 +27,22 @@ A aplicação é capaz de cadastrar novos, alterar, listar(com paginação) e de
 
 ## :railway_track: Rotas
 
+### :page_facing_up: Rota da documentação:
+
+GET http://localhost:3000/api-docs
+
+### :pouting_face: Rota de Autenticação:
+
+POST http://localhost:3000/api/v1/authenticate
+```
+{
+    "email": "joazinho@email.com",
+    "senha": "123456"
+}
+```
+
 ### :oncoming_automobile: Rotas de Carros:
+#### * Obs: para acessar as rotas é necessário fazer o login antes.
 
 POST http://localhost:3000/api/v1/car
 ```
@@ -104,6 +119,43 @@ PUT http://localhost:3000/api/v1/peaple/:id
 "habilitado": "sim"
 }
 ```
+### :oncoming_automobile: Rotas de Locadoras:
 
+POST http://localhost:3000/api/v1/rental
+```
+{
+"nome": "Localiza Rent a Car",
+"cnpj": "16.670.085/0001-55",
+"atividades": "Aluguel de Carros E Gestão de Frotas",
+"endereco": [
+      {
+      "cep": "96200-200",
+      "number":"1234",
+      "isFilial": false
+      }
+  ]
+}
+```
 
+GET http://localhost:3000/api/v1/rental
+
+GET http://localhost:3000/api/v1/rental/:id
+
+DELETE http://localhost:3000/api/v1/renatl/:id
+
+PUT http://localhost:3000/api/v1/rental/:id
+```
+{
+"nome": "Rent a Car",
+"cnpj": "16.670.085/0001-55",
+"atividades": "Aluguel de Carros E Gestão de Frotas",
+"endereco": [
+      {
+      "cep": "96200-200",
+      "number":"1234",
+      "isFilial": false
+      }
+  ]
+}
+```
 
