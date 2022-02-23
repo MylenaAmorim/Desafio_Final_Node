@@ -1,27 +1,20 @@
-const mongoose = require('mongoose');
 require('dotenv').config();
+const mongoose = require("mongoose");
 
-class Database {
-  constructor() {
-    this.connect();
-  }
+const MONGO_URL = process.env.MONGO_URI
 
-  async connect() {
-    const db = process.env.DATABASE
-
-    return mongoose.connect(db, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      autoIndex: true
+const connect = () => {
+    mongoose.connect(MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
     })
-      .then(() => {
-        console.log("Conectado com o banco ", db)
-      })
-      .catch((error) => {
+    .then(()=>{
+        console.log("Conectado com o Atlas")
+    })
+    .catch((error)=>{
         console.log("Algo deu errado")
         console.error(error)
-      });
-  }
+    })
 }
 
-module.exports = new Database().connect();
+module.exports = { connect }
