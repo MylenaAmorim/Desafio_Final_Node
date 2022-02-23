@@ -7,7 +7,7 @@ class Database {
   }
 
   async connect() {
-    const db = "mongodb+srv://dev:teste100@cluster0.6arfm.mongodb.net/compassolisa?retryWrites=true&w=majority"
+    const db = process.env.DATABASE
 
     return mongoose.connect(db, {
       useNewUrlParser: true,
