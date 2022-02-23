@@ -1,5 +1,5 @@
 require('./infra/database/mongo/index');
-require('dotenv-safe').config();
+require('dotenv').config();
 
 const cookieParser = require('cookie-parser')
 const express = require('express');
