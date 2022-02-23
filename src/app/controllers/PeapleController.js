@@ -1,4 +1,4 @@
-const PeapleService = require('../service/PeapleService');
+const PeapleService = require('./../service/PeapleService');
 const UtilError = require('../util/utilError');
 
 class PeapleController {
