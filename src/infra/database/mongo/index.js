@@ -1,20 +1,25 @@
+const mongoose = require('mongoose');
 require('dotenv').config();
-const mongoose = require("mongoose");
 
-const MONGO_URL = process.env.MONGO_URI
+class Database {
+  constructor() {
+    this.connect();
+  }
 
-const connect = () => {
-    mongoose.connect(MONGO_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then(()=>{
-        console.log("Conectado com o Atlas", MONGO_URL)
-    })
-    .catch((error)=>{
-        console.log("Algo deu errado")
-        console.error(error)
-    })
+  connect() {
+    const db = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/compassolisa';
+    return mongoose.connect(db, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      autoIndex: true
+    }).then(()=>{
+      console.log("Conectado com o Atlas", db)
+  })
+  .catch((error)=>{
+      console.log("Algo deu errado")
+      console.error(error)
+  })
+  }
 }
 
-module.exports = { connect }
+module.exports = new Database().connect();
