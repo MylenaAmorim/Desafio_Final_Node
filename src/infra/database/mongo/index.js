@@ -9,7 +9,7 @@ const connect = () => {
         useUnifiedTopology: true
     })
     .then(()=>{
-        console.log("Conectado com o Atlas")
+        console.log("Conectado com o Atlas", MONGO_URL)
     })
     .catch((error)=>{
         console.log("Algo deu errado")
