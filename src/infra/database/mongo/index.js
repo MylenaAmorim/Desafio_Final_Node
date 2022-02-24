@@ -19,7 +19,7 @@ class Database {
       })
       .catch((error) => {
         console.log("Algo deu errado")
-        console.error(error)
+        console.log(error)
       });
   }
 }
