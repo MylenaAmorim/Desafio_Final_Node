@@ -1,4 +1,4 @@
-const PeapleController = require('../app/controllers/peapleController');
+const PeapleController = require('../app/controllers/PeapleController.js');
 
 const createValidation = require('../app/validation/peaple/create');
 const validationId = require('../app/validation/general/validationId.js');

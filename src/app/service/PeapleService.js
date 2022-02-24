@@ -1,4 +1,4 @@
-const PeapleRepository = require('../repository/peapleRepository');
+const PeapleRepository = require('../repository/PeapleRepository.js');
 const { where } = require('../schema/peaple');
 const Util = require('../util/util');
 const UtilError = require('../util/utilError');

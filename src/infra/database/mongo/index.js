@@ -6,9 +6,8 @@ class Database {
     this.connect();
   }
 
-  async connect() {
-    const db = process.env.DATABASE
-
+  connect() {
+    const db = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/compassolisa';
     return mongoose.connect(db, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

@@ -2,7 +2,7 @@
   "name": "projeto-final",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "server.js",
   "dependencies": {
     "@joi/date": "^2.1.0",
     "axios": "^0.25.0",
