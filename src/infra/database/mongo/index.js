@@ -12,13 +12,7 @@ class Database {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       autoIndex: true
-    }).then(()=>{
-      console.log("Conectado com o Atlas", db)
-  })
-  .catch((error)=>{
-      console.log("Algo deu errado")
-      console.error(error)
-  })
+    });
   }
 }
 
