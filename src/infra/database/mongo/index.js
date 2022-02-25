@@ -12,14 +12,7 @@ class Database {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       autoIndex: true
-    })
-      .then(() => {
-        console.log("Conectado com o banco ", db)
-      })
-      .catch((error) => {
-        console.log("Algo deu errado")
-        console.log(error)
-      });
+    });
   }
 }
 
