@@ -27,6 +27,8 @@ A aplicação é capaz de cadastrar novos, alterar, listar(com paginação) e de
 
 ## :railway_track: Rotas
 
+### Servidor do Hiroku: https://mylena-compasso.herokuapp.com
+
 ### :page_facing_up: Rota da documentação:
 
 GET http://localhost:3000/api-docs
